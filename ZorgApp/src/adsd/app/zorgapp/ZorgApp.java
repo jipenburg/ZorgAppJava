@@ -31,6 +31,7 @@ class ZorgApp
 			System.out.println("Welkom in het menu: ");
 			System.out.println("Maak een keuze: \n1)Bewerken patientgegevens.");
 			System.out.println("2)Overzicht medische gegevens");
+			System.out.println("3)Aanpassen medicatie");
 			
 			int userAnswer = myScanner.nextInt();
 			
@@ -61,8 +62,26 @@ class ZorgApp
 				+"\n Omschrijving: " + medicijn1.getomschrijving()
 				+"\n Soort: " + medicijn1.getsoort()
 				+"\n Dosering: " + medicijn1.getdosering());
+				
+				
 				break;
 			}
+			else if (userAnswer == 3) 
+			{
+				System.out.println("Bewerken van medicijnen: ");
+				System.out.println("Wat wilt u bewerken: (1,2,3,4)");
+				System.out.println
+				( "\n\n1) Huidige Medicatie: " + medicijn1.getmedicijnNaam()
+				+"\n2) Omschrijving: " + medicijn1.getomschrijving()
+				+"\n3) Soort: " + medicijn1.getsoort()
+				+"\n4) Dosering: " + medicijn1.getdosering());
+				int userInput = myScanner.nextInt();
+				myScanner.nextLine();
+				BewerkenMedicatie(medicijn1,userInput);
+				
+				
+			}
+			
 			else 
 			{
 				myScanner.close();
@@ -99,14 +118,40 @@ class ZorgApp
 			
 		
 		default:
-		   break;
+		    break;
 		}
 		
 	
 		
 		
 		return;
-	
+	}
+
+	private void BewerkenMedicatie(Medicijn medicijn,int userInput) 
+	{
+		switch(userInput) 
+		{
+		case 1:
+			
+		String inputMedicijn = myScanner.nextLine();
+		medicijn.setmedicijnNaam(inputMedicijn);
+			break;
+		case 2:
+			medicijn.setomschrijving(myScanner.nextLine());
+			break;
+		case 3:
+			medicijn.setsoort(myScanner.nextLine());
+			break;
+		case 4:
+			medicijn.setdosering(myScanner.nextLine());
+			break;
+			
+		default:
+		    break;
+		    
+		}
+		
+		return;
 	}
 	
 	
