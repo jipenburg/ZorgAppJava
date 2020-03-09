@@ -51,7 +51,7 @@ public class Medicijn
    {
 	   return dosering;
    }
-   
+  /* 
    public class MedicijnLijst
 	{
 
@@ -60,7 +60,7 @@ public class Medicijn
 		//Arraylist die de profiel klassen initieert met argumenten
 		// idee voor de toekomstige sprint
 
-		 public MedicijnLijst() 
+	 public MedicijnLijst() 
 		{
 			ArrayList <Medicijn> medicijnArray = new ArrayList<Medicijn>();
 			medicijnArray.add(new Medicijn ("Para", "Kleinen", "test", "1"));
@@ -69,7 +69,7 @@ public class Medicijn
 		} 
 	
 	
-	}
+	}*/
   // public MedicijnLijst <Medicijn> medicijnArray;
 	
 

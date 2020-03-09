@@ -96,7 +96,7 @@ public class Profile
 		
 		return String.format("%.2f", bmi);
 	}
-	
+	/*
 	public class ProfileList 
 	{
 
@@ -116,5 +116,5 @@ public class Profile
 		
 	
 	
-	}
+	}*/
 }
