@@ -8,111 +8,224 @@ class ZorgApp
 {
 	//Zorgt voor userinput
 	Scanner myScanner = new Scanner(System.in);
-	Profile profile1;
-	Medicijn medicijn1;
+	private Profile profile;
+    private ArrayList<Medicine> medicineList;
+    private ArrayList<WeightMeasurePoint> weightMeasurePointList;
 	
+	 
 	
-	
-	public ZorgApp() 
-	{
-		profile1 = new Profile("Joel","Ipenburg", 27, 80, 1.88);
-		medicijn1 = new Medicijn("Ibruprofen", "Het werkt ontstekingsremmend,"
-				+ " pijnstillend en koortsverlagend."," NSAID","maximaal 1200 mg per dag");
-	    //profile2 = new Profile("Frank", "Krijnen",26, 65, 1.80);
-		DisplayMenu();
+	  public ZorgApp() 
+      {
+          //initialize class object and lists
+          profile = new Profile();
+          medicineList = new ArrayList<Medicine>();
+          weightMeasurePointList = new ArrayList<WeightMeasurePoint>();
+
+          //call startup methods
+          AddStartData();
+          DisplayMenu();
+      }
+	//Add static data to ZorgApp
+	  private void AddStartData()
+      {
+          //Add Profile Data
+          profile.setFirstName("Kees");
+          profile.setLastName("Straaten");
+          profile.setAge(34);
+          profile.setWeight(68.5);
+          profile.setLength(1.81);
+
+          //Add Medicine Data to list as an new object
+          medicineList.add(new Medicine(
+              "Oxazepam",
+              "Het werkt rustgevend, spierontspannend, vermindert angstgevoelens en beïnvloedt de overdracht van elektrische prikkels in de hersenen.",
+              "Oxazepam behoort tot de benzodiazepinen.",
+              "50 mg per 24 uur."));
+          medicineList.add(new Medicine(
+              "Diclofenac",
+              "Het is te gebruiken bij pijn waarbij ook sprake is van een ontsteking, zoals bij gewrichtspijn, reumatoïde artritis (ontsteking van de gewrichten), ziekte van Bechterew en jicht (onsteking in uw gewricht).",
+              "Dit soort (Diclofenac) pijnstillers wordt ook wel NSAID's genoemd.",
+              "1 tablet per 6 uur."));
+
+          //Add WeightMeasurePoint Data to list as a new object
+          weightMeasurePointList.add(new WeightMeasurePoint("20-04-2010", "19:40", 65.55));
+          weightMeasurePointList.add(new WeightMeasurePoint("22-02-2011", "18:35", 63.11));
+      }
 	  
-	}
+	  //Display menu with numbers to choose from
+      private void DisplayMenu() 
+      {
+          //keep the menu running
+          while (true)
+          {
+              //show options with assigned numbers
+              System.out.println();
+              System.out.println("\nWelkom in het menu");
+              System.out.println("\nKies een nummer: " +
+                  "\n1) Profiel tonen." +
+                  "\n2) Profiel bewerken." +
+                  "\n3) Medicijn tonen." +
+                  "\n4) Medicijn bewerken.");
+
+              //call method depended on chosen number
+              switch (myScanner.nextLine())
+              {
+                  case "1":
+                      System.out.println(ShowProfile());
+                      myScanner.nextLine();
+                      break;
+                  case "2":
+                       System.out.println(ShowProfile());
+                       System.out.println("\nKies een nummer om te bewerken: (1, 2, 3, 4, 5)");
+                       
+                       switch (myScanner.nextLine()) 
+                       {    
+                       		case "1": 
+                       			System.out.println("Voer uw voornaam in: ");
+                       			EditProfile(profile,1);
+                       			break;
+                       		case "2":
+                       			System.out.println("Voer uw achternaam in: ");
+                       			EditProfile(profile,2);
+                       			break;
+                       		case "3":
+                       			System.out.println("Voer uw leeftijd in: ");
+                       			EditProfile(profile,3);
+                       			break;
+                       		case "4":    
+                       			System.out.println("Voer uw gewicht in met een comma: ");
+                       			EditProfile(profile,4);
+                       			break;
+                       		case "5":    
+                       			System.out.println("Voer uw lengte in met een comma: ");
+                       			EditProfile(profile,5);
+                       			break;
+                       		default:
+                       			break;
+                       }
+                       System.out.println(ShowProfile());
+                       System.out.println("\nDruk op enter om terug naar het menu te gaan.");
+                       myScanner.nextLine();
+                       break;
+                  case "3":
+                      System.out.println(ShowMedicineList());
+                      myScanner.nextLine();
+                      break;
+                  case "4":
+                      System.out.println(ShowMedicineList());
+                       System.out.println("\nMaak een keuze om te bewerken: ");
+                      int medicineId = myScanner.nextInt();
+                       myScanner.nextLine();
+                       Medicine medicine = medicineList.get(medicineId -1);
+                       System.out.println(ShowMedicine(medicine));
+                       System.out.println("\nKies een nummer om te bewerken: (1, 2, 3, 4)");
+                       
+                       switch (myScanner.nextLine()) 
+                       {
+					   		case "1":
+					   			EditMedicine(medicine, 1);
+					   			break;
+					   		case "2":
+					   			EditMedicine(medicine, 2);	
+					   			break;
+					   		case "3":
+					   			EditMedicine(medicine, 3);					
+					   			break;
+					   		case "4":
+					   			EditMedicine(medicine, 4);	
+					   			break;
+					   		default:
+					   			break;	
+					   }
+                       System.out.println(ShowMedicine(medicine));
+                       System.out.println("\nDruk op enter om terug naar het menu te gaan.");
+                       
+                       myScanner.nextLine();
+                      break;
+                      
+                  case "5":
+                      System.out.println(getWeightGraph());
+                      myScanner.nextLine();
+                      break;    
+             
+                  default:
+                      System.out.println("Nummer niet herkent! Probeer nogmaals..");
+                      myScanner.nextLine();
+                      break;
+              }
+          }
+      }
+		
+		
 	
-	private void DisplayMenu() 
+	
+    private String ShowProfile() 
+      {
+          return
+              "\n1)Voornaam: "+ profile.getFirstName() +
+              "\n2)Achternaam: "+ profile.getLastName() +
+              "\n3)Leeftijd: "+ profile.getAge() +
+              "\n4)Gewicht: " + profile.getWeight() + " kg" +
+              "\n5)Lengte: " + profile.getLength() + " m" +
+              "\nBMI: " + profile.getBmi();
+      }
+    
+    private String ShowMedicine(Medicine medicine) 
+    {
+           return
+            	"\n\n" +	
+                "\n1)Medicijn: " + medicine.getMedicineName() +
+                "\n2)Beschrijving: " + medicine.getDescription() +
+                "\n3)Soort: " + medicine.getSort()  +
+                "\n4)Dosering: " + medicine.getDosage();
+    
+    }
+    
+	private String ShowMedicineList() 
 	{
+		String medicineListReturn = "";
+		int id = 1;
+        for (Medicine medicine : medicineList)
+        {
+
+            medicineListReturn += 
+            	"\n\nKeuze: "+ id + ")" +	
+                "\nMedicijn: " + medicine.getMedicineName() +
+                "\nBeschrijving: " + medicine.getDescription() +
+                "\nSoort: " + medicine.getSort()  +
+                "\nDosering: " + medicine.getDosage();
+            id++;
+        }
 		
-		while(true) 
-		{
-			System.out.println("Welkom in het menu: ");
-			System.out.println("Maak een keuze: \n1)Bewerken patientgegevens.");
-			System.out.println("2)Overzicht medische gegevens");
-			System.out.println("3)Aanpassen medicatie");
-			
-			int userAnswer = myScanner.nextInt();
-			
-			
-			if (userAnswer == 1) 
-			{
-				System.out.println("Wat wilt u bewerken: (1,2,3,4,5)");
-				System.out.println("1) Voornaam: " + profile1.getVoornaam() 
-				+"\n2) Achternaam: "+ profile1.getAchterNaam()  
-				+"\n3) Leeftijd: "+ profile1.getLeeftijd()  
-				+"\n4) Gewicht: "+ profile1.getGewicht()  
-				+"\n5) Lengte: "+ profile1.getLengte());
-				int userInput = myScanner.nextInt();
-				myScanner.nextLine();
-				EditPatient(profile1,userInput);
-			}
-			
-			else if (userAnswer == 2) 
-			{
-				System.out.println("Patient gegevens: ");
-				System.out.println("\n Voornaam: " + profile1.getVoornaam() 
-				+"\n Achternaam: "+ profile1.getAchterNaam()  
-				+"\n Leeftijd: "+ profile1.getLeeftijd()  
-				+"\n Gewicht: "+ profile1.getGewicht()  
-				+"\n Lengte: "+ profile1.getLengte() 
-				+"\n Bmi: "+ profile1.getBmi()
-				+"\n\n Huidige Medicatie: " + medicijn1.getmedicijnNaam()
-				+"\n Omschrijving: " + medicijn1.getomschrijving()
-				+"\n Soort: " + medicijn1.getsoort()
-				+"\n Dosering: " + medicijn1.getdosering());
-				
-				
-				break;
-			}
-			else if (userAnswer == 3) 
-			{
-				System.out.println("Bewerken van medicijnen: ");
-				System.out.println("Wat wilt u bewerken: (1,2,3,4)");
-				System.out.println
-				( "\n\n1) Huidige Medicatie: " + medicijn1.getmedicijnNaam()
-				+"\n2) Omschrijving: " + medicijn1.getomschrijving()
-				+"\n3) Soort: " + medicijn1.getsoort()
-				+"\n4) Dosering: " + medicijn1.getdosering());
-				int userInput = myScanner.nextInt();
-				myScanner.nextLine();
-				BewerkenMedicatie(medicijn1,userInput);
-				
-				
-			}
-			
-			else 
-			{
-				myScanner.close();
-			}
-		}
-		
+		return medicineListReturn;
 	}
-		
-		
 	
+	private char[] getWeightGraph() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
-	private void EditPatient(Profile profile,int userInput) 
+	private void EditProfile(Profile profile,int userInput) 
 	{
 		switch (userInput) 
 		{
 		case 1: 
-			//System.out.println("Vul uw voornaam in: ");
-		String inputVoornaam = myScanner.nextLine();
-		profile.setVoorNaam(inputVoornaam);	
+		    profile.setFirstName(myScanner.nextLine());
 			break;
 		case 2:
-		profile.setAchterNaam(myScanner.nextLine());	
+		    profile.setLastName(myScanner.nextLine());	
 			break;
 		case 3: 
-			profile.setLeeftijd(myScanner.nextInt());
+			profile.setAge(myScanner.nextInt());
+	        myScanner.nextLine();
 			break;
 		case 4:
-		profile.setGewicht(myScanner.nextDouble());
+		    profile.setWeight(myScanner.nextDouble());
+		    myScanner.nextLine();
 		    break;
 		case 5:
-		profile.setLengte(myScanner.nextDouble());
+		     profile.setLength(myScanner.nextDouble());
+		     myScanner.nextLine();
 			break;
 			
 			
@@ -127,23 +240,21 @@ class ZorgApp
 		return;
 	}
 
-	private void BewerkenMedicatie(Medicijn medicijn,int userInput) 
-	{
+	private void EditMedicine(Medicine medicine,int userInput) 
+	{    //userInput = Chosen number from the display menu.
 		switch(userInput) 
 		{
 		case 1:
-			
-		String inputMedicijn = myScanner.nextLine();
-		medicijn.setmedicijnNaam(inputMedicijn);
+		medicine.setMedicineName(myScanner.nextLine());
 			break;
 		case 2:
-			medicijn.setomschrijving(myScanner.nextLine());
+			medicine.setDescription(myScanner.nextLine());
 			break;
 		case 3:
-			medicijn.setsoort(myScanner.nextLine());
+			medicine.setSort(myScanner.nextLine());
 			break;
 		case 4:
-			medicijn.setdosering(myScanner.nextLine());
+			medicine.setDosage(myScanner.nextLine());
 			break;
 			
 		default:

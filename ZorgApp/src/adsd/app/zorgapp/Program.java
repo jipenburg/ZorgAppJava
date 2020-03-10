@@ -9,13 +9,13 @@ import java.util.Scanner;
 public class Program 
 {
 
-  static ZorgApp myZorgApp;
+  private static ZorgApp zorgApp;
 	
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
 	    
-		 myZorgApp = new ZorgApp();
+		 zorgApp = new ZorgApp();
 	    
 	}
 
