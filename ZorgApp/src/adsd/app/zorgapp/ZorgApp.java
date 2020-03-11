@@ -29,11 +29,11 @@ class ZorgApp
 	  private void AddStartData()
       {
           //Add Profile Data
-          profile.setFirstName("Kees");
-          profile.setLastName("Straaten");
-          profile.setAge(34);
-          profile.setWeight(68.5);
-          profile.setLength(1.81);
+          profile.setFirstName("Joel");
+          profile.setLastName("Ipenburg");
+          profile.setAge(27);
+          profile.setWeight(80);
+          profile.setLength(1.88);
 
           //Add Medicine Data to list as an new object
           medicineList.add(new Medicine(
@@ -48,8 +48,8 @@ class ZorgApp
               "1 tablet per 6 uur."));
 
           //Add WeightMeasurePoint Data to list as a new object
-          weightMeasurePointList.add(new WeightMeasurePoint("20-04-2010", "19:40", 65.55));
-          weightMeasurePointList.add(new WeightMeasurePoint("22-02-2011", "18:35", 63.11));
+          weightMeasurePointList.add(new WeightMeasurePoint("20-04-2019", "19:40", 76));
+          weightMeasurePointList.add(new WeightMeasurePoint("22-02-2019", "18:35", 77.5));
       }
 	  
 	  //Display menu with numbers to choose from
@@ -65,7 +65,9 @@ class ZorgApp
                   "\n1) Profiel tonen." +
                   "\n2) Profiel bewerken." +
                   "\n3) Medicijn tonen." +
-                  "\n4) Medicijn bewerken.");
+                  "\n4) Medicijn bewerken." +
+                  "\n5) Gewicht tonen" +
+                  "\n6) Gewicht bewerken");
 
               //call method depended on chosen number
               switch (myScanner.nextLine())
@@ -143,10 +145,41 @@ class ZorgApp
                        myScanner.nextLine();
                       break;
                       
-                  case "5":
-                      System.out.println(getWeightGraph());
+                   case "5":
+                      System.out.println(ShowWeightList());
                       myScanner.nextLine();
-                      break;    
+                      break;  
+                   case "6":
+                       System.out.println(ShowWeightList());
+                        System.out.println("\nMaak een keuze om te bewerken: ");
+                       int weightId = myScanner.nextInt();
+                        myScanner.nextLine();
+                        WeightMeasurePoint weightMeasurePoint = weightMeasurePointList.get(weightId -1);
+                        System.out.println(ShowWeight(weightMeasurePoint));
+                        System.out.println("\nKies een nummer om te bewerken: (1, 2, 3)");
+                        
+                        switch (myScanner.nextLine()) 
+                        {
+ 					   		case "1":
+ 					   			System.out.println("Voer de datum in: ");
+ 					   			EditWeight(weightMeasurePoint, 1);
+ 					   			break;
+ 					   		case "2":
+ 					   			System.out.println("Voer de tijd in: ");
+ 					   			EditWeight(weightMeasurePoint, 2);	
+ 					   			break;
+ 					   		case "3":
+ 					   			System.out.println("Voer uw gewicht in met een comma: ");
+ 					   			EditWeight(weightMeasurePoint, 3);					
+ 					   			break;
+ 					   		default:
+ 					   			break;	
+ 					   }
+                        System.out.println(ShowWeight(weightMeasurePoint));
+                        System.out.println("\nDruk op enter om terug naar het menu te gaan.");
+                        
+                        myScanner.nextLine();
+                       break;
              
                   default:
                       System.out.println("Nummer niet herkent! Probeer nogmaals..");
@@ -156,7 +189,7 @@ class ZorgApp
           }
       }
 		
-		
+	
 	
 	
     private String ShowProfile() 
@@ -198,6 +231,31 @@ class ZorgApp
         }
 		
 		return medicineListReturn;
+	}
+	
+	private String ShowWeight(WeightMeasurePoint weightMeasurePointList) 
+	{
+		return
+				"\n1)Datum: " + weightMeasurePointList.getDate() +
+                "\n2)Tijd: " + weightMeasurePointList.getTime() +
+                "\n3)Gewicht: " + weightMeasurePointList.getWeight();
+	}
+	
+	private String ShowWeightList()	
+	{
+		String weightMeasurePointListReturn = "";
+		int id = 1;
+        for (WeightMeasurePoint weightMeasurePoint : weightMeasurePointList)
+        {
+
+        	weightMeasurePointListReturn += 
+            	"\n\nKeuze: "+ id + ")" +	
+                "\nDatum: " + weightMeasurePoint.getDate() +
+                "\nTijd: " + weightMeasurePoint.getTime() +
+                "\nGewicht: " + weightMeasurePoint.getWeight();
+            id++;
+        }
+		return weightMeasurePointListReturn;
 	}
 	
 	private char[] getWeightGraph() {
@@ -264,6 +322,31 @@ class ZorgApp
 		
 		return;
 	}
+	
+	private void EditWeight(WeightMeasurePoint weightMeasurePoint,int userInput) 
+	{    //userInput = Chosen number from the display menu.
+		switch(userInput) 
+		{
+		case 1:
+		weightMeasurePoint.setDate(myScanner.nextLine());
+			break;
+		case 2:
+			weightMeasurePoint.setTime(myScanner.nextLine());
+			break;
+		case 3:
+			weightMeasurePoint.setWeight(myScanner.nextDouble());
+			 myScanner.nextLine();
+			break;
+		
+			
+		default:
+		    break;
+		    
+		}
+		
+		return;
+	}
+	
 	
 	
 	
