@@ -1,8 +1,13 @@
 package adsd.app.zorgapp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
-import java.util.Scanner; 
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 class ZorgApp
 {
@@ -12,7 +17,7 @@ class ZorgApp
     private ArrayList<Medicine> medicineList;
     private ArrayList<WeightMeasurePoint> weightMeasurePointList;
 	
-	 
+   
 	
 	  public ZorgApp() 
       {
@@ -20,8 +25,10 @@ class ZorgApp
           profile = new Profile();
           medicineList = new ArrayList<Medicine>();
           weightMeasurePointList = new ArrayList<WeightMeasurePoint>();
-
+          AlarmClock alarmNotification = new AlarmClock();
           //call startup methods
+          
+          alarmNotification.checkAlarm(12,47);
           AddStartData();
           DisplayMenu();
       }
@@ -34,7 +41,7 @@ class ZorgApp
           profile.setAge(27);
           profile.setWeight(80);
           profile.setLength(1.88);
-
+         
           //Add Medicine Data to list as an new object
           medicineList.add(new Medicine(
               "Oxazepam",
@@ -61,7 +68,7 @@ class ZorgApp
               //show options with assigned numbers
               System.out.println();
               System.out.println("\nWelkom in het menu");
-              System.out.println("\nKies een nummer: " +
+              System.out.println("\nKies een optie: " +
                   "\n1) Profiel tonen." +
                   "\n2) Profiel bewerken." +
                   "\n3) Medicijn tonen." +
@@ -75,6 +82,8 @@ class ZorgApp
                   case "1":
                       System.out.println(ShowProfile());
                       myScanner.nextLine();
+                      
+                      
                       break;
                   case "2":
                        System.out.println(ShowProfile());
@@ -191,7 +200,7 @@ class ZorgApp
 		
 	
 	
-	
+	//Show methods
     private String ShowProfile() 
       {
           return
@@ -263,6 +272,7 @@ class ZorgApp
 		return null;
 	}
 	
+	//Edit methods
 	private void EditProfile(Profile profile,int userInput) 
 	{
 		switch (userInput) 
@@ -314,7 +324,7 @@ class ZorgApp
 		case 4:
 			medicine.setDosage(myScanner.nextLine());
 			break;
-			
+		
 		default:
 		    break;
 		    
@@ -347,13 +357,7 @@ class ZorgApp
 		return;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	
 }
