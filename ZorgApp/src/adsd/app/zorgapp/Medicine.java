@@ -11,7 +11,13 @@ class Medicine
     private String dosage;
 
     //constructor with 1 overload
-    public Medicine() { }
+    public Medicine() 
+    { 
+    	  setMedicineName(null);
+          setDescription(null);
+          setSort(null);
+          setDosage(null);
+    }
 
     public Medicine(String medicineName, String description, String sort, String dosage) 
     {
@@ -23,16 +29,40 @@ class Medicine
 
     //methods
     //setters
-    public void setMedicineName(String medicineName) { this.medicineName = medicineName; }
-    public void setDescription(String description) { this.description = description; }
-    public void setSort(String sort) { this.sort = sort; }
-    public void setDosage(String dosage) { this.dosage = dosage; }
+    public void setMedicineName(String medicineName) 
+    { 
+    	this.medicineName = medicineName; 
+    }
+    public void setDescription(String description) 
+    { 
+    	this.description = description; 
+    }
+    public void setSort(String sort) 
+    { 
+    	this.sort = sort; 
+    }
+    public void setDosage(String dosage) 
+    { 
+    	this.dosage = dosage; 
+    }
 
     //getters
-    public String getMedicineName() { return medicineName; }
-    public String getDescription() { return description; }
-    public String getSort() { return sort; }
-    public String getDosage() { return dosage; }
+    public String getMedicineName() 
+    { 
+    	return medicineName; 
+    }
+    public String getDescription() 
+    { 
+    	return description; 
+    }
+    public String getSort() 
+    { 
+    	return sort; 
+    }
+    public String getDosage() 
+    { 
+    	return dosage; 
+    }
 }
 	
 

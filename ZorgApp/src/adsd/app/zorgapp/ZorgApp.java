@@ -13,7 +13,7 @@ class ZorgApp
 {
 	//Zorgt voor userinput
 	Scanner myScanner = new Scanner(System.in);
-	private Profile profile;
+	private ArrayList<Profile> profileList;
     private ArrayList<Medicine> medicineList;
     private ArrayList<WeightMeasurePoint> weightMeasurePointList;
 	
@@ -22,7 +22,7 @@ class ZorgApp
 	  public ZorgApp() 
       {
           //initialize class object and lists
-          profile = new Profile();
+          profileList = new ArrayList<Profile>();
           medicineList = new ArrayList<Medicine>();
           weightMeasurePointList = new ArrayList<WeightMeasurePoint>();
           AlarmClock alarmNotification = new AlarmClock();
@@ -36,11 +36,8 @@ class ZorgApp
 	  private void AddStartData()
       {
           //Add Profile Data
-          profile.setFirstName("Joel");
-          profile.setLastName("Ipenburg");
-          profile.setAge(27);
-          profile.setWeight(80);
-          profile.setLength(1.88);
+          profileList.add(new Profile("Joel","Ipenburg", 27, 80, 1.88));
+          profileList.add(new Profile("Piet","Piraat", 35, 70, 1.70));
          
           //Add Medicine Data to list as an new object
           medicineList.add(new Medicine(
@@ -69,25 +66,32 @@ class ZorgApp
               System.out.println();
               System.out.println("\nWelkom in het menu");
               System.out.println("\nKies een optie: " +
-                  "\n1) Profiel tonen." +
+                  "\n1) ProfielLijst tonen." +
                   "\n2) Profiel bewerken." +
-                  "\n3) Medicijn tonen." +
+                  "\n3) MedicijnLijst tonen." +
                   "\n4) Medicijn bewerken." +
-                  "\n5) Gewicht tonen" +
+                  "\n5) GewichtLijst tonen" +
                   "\n6) Gewicht bewerken");
 
               //call method depended on chosen number
               switch (myScanner.nextLine())
-              {
+              {	 //1) ProfielLijst tonen.
                   case "1":
-                      System.out.println(ShowProfile());
+                	  
+                      System.out.println(ShowProfileList(profileList));
                       myScanner.nextLine();
                       
                       
                       break;
                   case "2":
-                       System.out.println(ShowProfile());
-                       System.out.println("\nKies een nummer om te bewerken: (1, 2, 3, 4, 5)");
+                	  
+                	  System.out.println(ShowProfileList(profileList));
+                      System.out.println("\nMaak een keuze om te bewerken: ");
+                      int profileId = myScanner.nextInt();
+                      myScanner.nextLine();
+                      Profile profile = profileList.get(profileId -1);
+                      System.out.println(ShowProfile(profile));
+                      System.out.println("\nKies een nummer om te bewerken: (1, 2, 3, 4, 5)");
                        
                        switch (myScanner.nextLine()) 
                        {    
@@ -114,18 +118,18 @@ class ZorgApp
                        		default:
                        			break;
                        }
-                       System.out.println(ShowProfile());
+                       System.out.println(ShowProfile(profile));
                        System.out.println("\nDruk op enter om terug naar het menu te gaan.");
                        myScanner.nextLine();
                        break;
                   case "3":
-                      System.out.println(ShowMedicineList());
-                      myScanner.nextLine();
+                       System.out.println(ShowMedicineList());
+                       myScanner.nextLine();
                       break;
                   case "4":
-                      System.out.println(ShowMedicineList());
+                	   System.out.println(ShowMedicineList());
                        System.out.println("\nMaak een keuze om te bewerken: ");
-                      int medicineId = myScanner.nextInt();
+                       int medicineId = myScanner.nextInt();
                        myScanner.nextLine();
                        Medicine medicine = medicineList.get(medicineId -1);
                        System.out.println(ShowMedicine(medicine));
@@ -155,13 +159,13 @@ class ZorgApp
                       break;
                       
                    case "5":
-                      System.out.println(ShowWeightList());
-                      myScanner.nextLine();
-                      break;  
+                	   	System.out.println(ShowWeightList());
+                      	myScanner.nextLine();
+                      	break;  
                    case "6":
-                       System.out.println(ShowWeightList());
+                       	System.out.println(ShowWeightList());
                         System.out.println("\nMaak een keuze om te bewerken: ");
-                       int weightId = myScanner.nextInt();
+                        int weightId = myScanner.nextInt();
                         myScanner.nextLine();
                         WeightMeasurePoint weightMeasurePoint = weightMeasurePointList.get(weightId -1);
                         System.out.println(ShowWeight(weightMeasurePoint));
@@ -188,7 +192,7 @@ class ZorgApp
                         System.out.println("\nDruk op enter om terug naar het menu te gaan.");
                         
                         myScanner.nextLine();
-                       break;
+                        break;
              
                   default:
                       System.out.println("Nummer niet herkent! Probeer nogmaals..");
@@ -201,7 +205,7 @@ class ZorgApp
 	
 	
 	//Show methods
-    private String ShowProfile() 
+    private String ShowProfile(Profile profile) 
       {
           return
               "\n1)Voornaam: "+ profile.getFirstName() +
@@ -211,6 +215,26 @@ class ZorgApp
               "\n5)Lengte: " + profile.getLength() + " m" +
               "\nBMI: " + profile.getBmi();
       }
+    private String ShowProfileList(ArrayList<Profile> profileList) 
+    {
+    	String profileListReturn = "";
+		int id = 1;
+        for (Profile profile : profileList)
+        {
+
+            profileListReturn += 
+            	"\n\nKeuze: "+ id + ")" +	
+                "\nNaam: " + profile.getFirstName() +
+                "\nAchternaam: " + profile.getLastName() +
+                "\nLeeftijd: " + profile.getAge()  +
+                "\nLengte: " + profile.getLength() +
+                "\nBMI: " + profile.getBmi();
+            id++;
+        }
+		
+		return profileListReturn;
+    			
+    }
     
     private String ShowMedicine(Medicine medicine) 
     {
@@ -220,7 +244,6 @@ class ZorgApp
                 "\n2)Beschrijving: " + medicine.getDescription() +
                 "\n3)Soort: " + medicine.getSort()  +
                 "\n4)Dosering: " + medicine.getDosage();
-    
     }
     
 	private String ShowMedicineList() 
@@ -267,7 +290,8 @@ class ZorgApp
 		return weightMeasurePointListReturn;
 	}
 	
-	private char[] getWeightGraph() {
+	private char[] getWeightGraph() 
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -296,14 +320,9 @@ class ZorgApp
 		     myScanner.nextLine();
 			break;
 			
-			
-		
 		default:
 		    break;
 		}
-		
-	
-		
 		
 		return;
 	}
@@ -356,8 +375,5 @@ class ZorgApp
 		
 		return;
 	}
-	
-
-
 	
 }

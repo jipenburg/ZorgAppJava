@@ -8,14 +8,22 @@ class Profile
     private int age;
     private double weight;
     private double length;
-
     //constructor with 2 overloads
-    public Profile() { }
+    public Profile() 
+    { 
+    	 setFirstName(null);
+         setLastName(null);
+         setAge(0);
+         setWeight(0.00);
+         setLength(0.00);
+    }
+    
     public Profile(String firstName, String lastName) 
     {
         setFirstName(firstName);
         setLastName(lastName);
     }
+    
     public Profile(String firstName, String lastName, int age, double weight, double length) 
     {
         setFirstName(firstName);
@@ -27,18 +35,49 @@ class Profile
 
     //methods
     //setters
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public void setAge(int age) { this.age = age; }
-    public void setWeight(double weight) { this.weight = weight; }
-    public void setLength(double length) { this.length = length; }
+    public void setFirstName(String firstName) 
+    { 
+    	this.firstName = firstName; 
+    }
+    
+    public void setLastName(String lastName) 
+    { 
+    	this.lastName = lastName; 
+    }
+    public void setAge(int age) 
+    { 
+    	this.age = age; 
+    }
+    public void setWeight(double weight) 
+    { 
+    	this.weight = weight; 
+    }
+    public void setLength(double length) 
+    { 
+    	this.length = length; 
+    }
 
     //getters
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public int getAge() { return age; }
-    public double getWeight() { return weight; }
-    public double getLength() { return length; }
+    public String getFirstName() 
+    { 
+    	return firstName; 
+    }
+    public String getLastName() 
+    { 
+    	return lastName; 
+    }
+    public int getAge() 
+    { 
+    	return age; 
+    }
+    public double getWeight() 
+    { 
+    	return weight; 
+    }
+    public double getLength() 
+    { 
+    	return length; 
+    }
 	
 	public String getBmi() 
 	{
